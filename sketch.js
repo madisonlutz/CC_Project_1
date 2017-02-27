@@ -1,26 +1,42 @@
-/* still not sure where I am going with my project but I decided to just
-play around for a bit and see where it goes. This is the result of that.
+/* Was getting stressed and frustrated working on this project. I 
+suppose this is a manifestation of those adjectives. But I kind of like
+where this could go!
 */
 
 
+
 function setup() { 
-  createCanvas(400, 400);
+  createCanvas(600, 600);
+  frameRate(hour());
 } 
 
 function draw() { 
-  background(200, 200, 250);
-  thing(10, 10, 10);
-  thing(100, 25, 100);
-  thing(20, 25, 50);
-  thing(200, 200, 75);
+
+  background (second()*4.3, second()*4.3, second()*4.3);
+  
+
+  target ((second()*(random(10))), 300);
+  target (300, (second()*(random(10))));
+  target (0, (second()*(random(10))));
+  target ((second()*(random(10))), 0);
+  target (600, (second()*(random(10))));
+  target ((second()*(random(10))), 600);
 }
 
-function thing(x, y, d){
+function target(x, y){
+  	ellipseMode(CENTER);
+  	noStroke();
+  	fill (211, 0, 0);
+  	ellipse (x, y, 100, 100);
+  	fill(255);
+  	ellipse (x, y, 65, 65);
+  	fill (211, 0, 0);
+  	ellipse (x, y, 30, 30);
   
-  	for (x; x<400; x+=30){
-      strokeWeight(5);
-      stroke(100, 100, 250);
-      line(x, y, mouseX+d, mouseY+d);
-    }//x for loop end
+function crosshair (x, y){
+//I am trying to get one of those little crosshair + signs to follow my
+//cursor but I forget how to do that...
   
-}// thing end
+}
+  
+}// target end
