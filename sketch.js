@@ -1,3 +1,4 @@
+//PROJECT 1
 //adjective: UNFAIR
 //by: Madison Lutz
 //references/credit given when necessary in the comments
@@ -240,9 +241,11 @@ function sun (){
 }//sun end
 
 function water (){
-  //this way of creating waves comes from the p5js.org examples
-  //https://p5js.org/examples/math-noise-wave.html
-  //I've included notes to show that I understand what is happening line by line
+  /* this way of creating waves comes from the p5js.org examples.
+  	 https://p5js.org/examples/math-noise-wave.html
+  	 I've included notes to show that I understand what is happening
+     line by line and adapted the code as needed.
+  */
   
   noStroke(); //I added this because I didn't want a black stroke along the top of the wave
   fill(0, 169, 255); //I changed the fill color to an ocean-like blue
