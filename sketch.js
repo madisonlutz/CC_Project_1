@@ -5,6 +5,7 @@ var lasRandY;
 var tarRandX;
 var tarRandY;
 var value = 1;
+var lives = 50;
 
 function setup() { 
   cursor(CROSS);
@@ -30,6 +31,7 @@ function draw() {
     start(100,200,40);
     tarRandX = 0;
     tarRandY = 0;
+    lives = 50;
   }//if end
   
 //targets begin random movement
@@ -70,7 +72,38 @@ function draw() {
   
 //green lasers
   laser();
+
+// lives ease
+  if (mouseIsPressed && value == 1) {
+    lives = lives - 1;
+  }
   
+  if (mouseIsPressed && value == 0){
+    lives = lives + 1;
+  }
+  
+  if (lives >= 100) {
+    beach();
+    
+  }
+
+//lives count
+	fill (255);
+  noStroke();
+  textSize(20);
+  text ('lives remaining:', 30, 370);
+  text ( lives, 175, 370);
+  
+//if lives < 0
+  if (lives <= 0) {
+    background(255);
+    fill(0);
+    noStroke();
+    textSize(40);
+    text ('GAME OVER', 175, 200)
+    
+    
+  }
 }
 
 function meter(){
@@ -92,6 +125,7 @@ function laser(){
   	print("testing");
   	stroke(0, 255, 4);
   	line(mouseX, mouseY, lasRandX, lasRandY);
+
   }
 }	
 
@@ -151,6 +185,10 @@ function easy(x, y, s){
   text("easy mode", x, y);
 } //miss end
 
+function beach(){
+  background(142, 251, 255);
+  ellipseMode(CENTER);
+}
 
 
 
