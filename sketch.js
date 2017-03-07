@@ -3,6 +3,19 @@
 //by: Madison Lutz
 //references/credit given when necessary in the comments
 
+/* 
+		HOW TO PLAY:
+		- There are two modes (easy and standard)
+    - You can switch between modes by pressing any key.
+    - Click to shoot the lasers.
+    - Dip below 0 lives and you lose.
+    - Exceed 100 lives and you win.
+    - Game restarts every minute and returns to standard mode. 
+    - The red meter on the right tracks the time.
+    - The player begins with 50 lives at the start of the game. 
+
+*/
+
 var sunset = [];
 var yCord = 0.0;
 var i;
@@ -11,7 +24,7 @@ var lasRandX;
 var lasRandY;
 var tarRandX;
 var tarRandY;
-var value = 1;
+var value = 1; //start in standard mode
 var lives = 50;
 
 function setup() { 
@@ -36,15 +49,15 @@ function draw() {
   strokeWeight(1);
 	noFill();
   stroke('red');
-//circle shooter aiming thing
   ellipse(mouseX,mouseY, 17, 17);
 
 //return to start
 	if (second()==0 || second()==1 || second()==2) {
-    start(100,200,40);
+    start(100,200,40); //return to start text
     tarRandX = 0;
     tarRandY = 0;
     lives = 50;
+    value = 1;
   }//if end
   
 //targets begin random movement
@@ -53,12 +66,12 @@ function draw() {
   	tarRandY = random(50,350);
   } //else end
   
-//if the laser hits a randomly moving target display 'HIT!' 
+//if the laser hits a randomly moving target display 'HIT!' (standard)
   if (tarRandX == lasRandX && tarRandY == lasRandY && mouseIsPressed && value == 1){
     hit(533, 30, 20);
   }//if end
   
-//if the laser misses a randomly moving target display 'MISS!'
+//if the laser misses a randomly moving target display 'MISS!' (standard)
   if (tarRandX != lasRandX && tarRandY != lasRandY && mouseIsPressed && value == 1){
     miss(533, 30, 20);
   }//if end
@@ -119,16 +132,14 @@ function draw() {
     fill('red');
     noStroke();
     textSize(40);
-    text ('GAME OVER', 175, 200)
-    
-    
+    text ('GAME OVER', 175, 200)  
   }
   
 print (value); //checking to make sure the different modes work
   
 } //draw end
 
-function meter(){
+function meter(){ //creating the time meter on the right
   sMeter = second()*5;
   fill('red');
   noStroke();
@@ -137,18 +148,17 @@ function meter(){
   strokeWeight(5);
   stroke(255);
   rect(550, 50, 25, 300);
-  
-}
+} //meter end
 
-function laser(){
+
+function laser(){ //creating the laser
   if (mouseIsPressed) {
   	lasRandX = random(50,550);
   	lasRandY = random(50, 350);
-  	stroke(0, 255, 4);
+  	stroke(0, 255, 4); //neon green color
   	line(mouseX, mouseY, lasRandX, lasRandY);
-
-  }
-}	
+  } //if mouseIsPressed end
+}	//laser end
 
 function target(x, y){
   	ellipseMode(CENTER);
@@ -186,7 +196,8 @@ function keyPressed() {
   if (value === 0) {
     value = 1;
     print('1');
-  } else {
+  } 
+  else {
     value = 0;
     print('0');
   }
@@ -197,51 +208,41 @@ function standard(x, y, s){
   noStroke();
   textSize(s);
   text("standard mode", x, y);
-} //miss end
+} //standard end
 
 function easy(x, y, s){
   fill(255);
   noStroke();
   textSize(s);
   text("easy mode", x, y);
-} //miss end
+} //easy end
 
-function beach (){
+function beach (){ //creating the winner screen
   background(191, 251, 255);
   sun();
   water();
   winner(200, 350, 40);
-}
+} //beach end
 
 
 function sun (){
-	
-/*so this is how I want this to look but I am not sure I understand
-  why this way of coding it is producing these results. I tried commenting
-  out sections to see how it work and I am still a little confused. For
-  example if you comment out "r = r +40;" and then change "r++" to "r+=40"
-  why does the stroke color change?
-*/
-  for (var r = 0; r<=300; r++){
+  for (var r = 0; r<=300; r++){ //creating the rays around the sun
     for(var i = 0; i<=4; i++){
       noFill();
 			strokeWeight(10);
-      stroke(sunset[i]);
+      stroke(sunset[i]); //fill with colors stored in my array
       ellipse(300, 250, 200+r, 200+r);
     	r = r + 40;
     } //i for-loop end
   } //r for-loop end
- 
-  
-  noStroke();
+	noStroke();
   fill(sunset[0])
-  ellipse(300,250,200,200);
-    
-    
+  ellipse(300,250,200,200); //creating the main sun 
 }//sun end
 
 function water (){
-  /* this way of creating waves comes from the p5js.org examples.
+  /* This way of creating waves comes from the p5js.org examples.
+  	 The original by Daniel Shiffman.
   	 https://p5js.org/examples/math-noise-wave.html
   	 I've included notes to show that I understand what is happening
      line by line and adapted the code as needed.
@@ -259,7 +260,8 @@ function water (){
     random () but more natural. It can be determined in 1D, 2D, or 3D
     depending on the supplied coordinates. Here I am just using x and y
     so it will only return values along the x and y axis. That is why my
-    waves move up and down and side to side by not front to back.
+    waves move up and down and span the width of the screen 
+    but the wave don't move front to back (depth).
     */
 
     for (var x = 0; x <= width; x += 10) { 
@@ -272,7 +274,7 @@ function water (){
       var y = map(noise(xCord, yCord), 0, 1, 200,300);
       /* (above) this determines the y value of the vertices by mapping
       	 the noise values from 0 to 1 to be 200 to 300. This keeps the 
-         waves from getting to high. They stay between 200 and 300. If
+         waves from getting too high. They stay between 200 and 300. If
          you were to change these values the waves would get either bigger
          (bigger dips) or calmer (shallower dips).
       */
