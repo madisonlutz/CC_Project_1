@@ -29,7 +29,7 @@ var lives = 50;
 
 function setup() { 
   cursor(CROSS);
-  createCanvas(600, 400);
+  createCanvas(windowWidth, windowHeight);
   ellipseMode(CENTER);
   stroke(0);
   
@@ -53,7 +53,7 @@ function draw() {
 
 //return to start
 	if (second()==0 || second()==1 || second()==2) {
-    start(100,200,40); //return to start text
+    start((width/2)-200, (height/2),40); //return to start text
     tarRandX = 0;
     tarRandY = 0;
     lives = 50;
@@ -62,23 +62,23 @@ function draw() {
   
 //targets begin random movement
   else {
-    tarRandX = random(50,550);
-  	tarRandY = random(50,350);
+    tarRandX = random(50,(width-100));
+  	tarRandY = random(50,(height-100));
   } //else end
   
 //if the laser hits a randomly moving target display 'HIT!' (standard)
   if (tarRandX == lasRandX && tarRandY == lasRandY && mouseIsPressed && value == 1){
-    hit(533, 30, 20);
+    hit(mouseX+20, mouseY+50, 50);
   }//if end
   
 //if the laser misses a randomly moving target display 'MISS!' (standard)
   if (tarRandX != lasRandX && tarRandY != lasRandY && mouseIsPressed && value == 1){
-    miss(533, 30, 20);
+    miss(mouseX+20, mouseY+50, 50);
   }//if end
   
 //easy mode hit 
   if (value == 0 && mouseIsPressed){
-    hit(543, 30, 20);
+    hit(mouseX+20, mouseY+50, 50);
   }//if end
   
 //moving target if value == 1
@@ -110,9 +110,7 @@ function draw() {
   
   if (lives >= 100) {
     beach();
-    value = 2;
-    
-    
+    value = 2;    
   }
 
 
@@ -121,8 +119,8 @@ function draw() {
     fill (255);
     noStroke();
     textSize(20);
-    text ('lives remaining:', 30, 370);
-    text ( lives, 175, 370);
+    text ('lives remaining:', 30, (height-30));
+    text ( lives, 175, (height-30));
   }
 
   
@@ -132,7 +130,7 @@ function draw() {
     fill('red');
     noStroke();
     textSize(40);
-    text ('GAME OVER', 175, 200)  
+    text ('GAME OVER', (width/2)-100, (height/2))  
   }
   
 print (value); //checking to make sure the different modes work
@@ -143,11 +141,11 @@ function meter(){ //creating the time meter on the right
   sMeter = second()*5;
   fill('red');
   noStroke();
-  rect(550, 50+sMeter, 25, 300-sMeter);
+  rect((width-50), 50+sMeter, 25, 300-sMeter);
   noFill();
   strokeWeight(5);
   stroke(255);
-  rect(550, 50, 25, 300);
+  rect((width-50), 50, 25, 300);
 } //meter end
 
 
@@ -221,7 +219,7 @@ function beach (){ //creating the winner screen
   background(191, 251, 255);
   sun();
   water();
-  winner(200, 350, 40);
+  winner((width/2)-90, (height/2)+200, 40);
 } //beach end
 
 
@@ -231,13 +229,13 @@ function sun (){
       noFill();
 			strokeWeight(10);
       stroke(sunset[i]); //fill with colors stored in my array
-      ellipse(300, 250, 200+r, 200+r);
+      ellipse(width/2, height/2, 200+r, 200+r);
     	r = r + 40;
     } //i for-loop end
   } //r for-loop end
 	noStroke();
   fill(sunset[0])
-  ellipse(300,250,200,200); //creating the main sun 
+  ellipse(width/2, height/2,200,200); //creating the main sun 
 }//sun end
 
 function water (){
@@ -271,7 +269,7 @@ function water (){
       long as x is less than or equal to the width
     */
 
-      var y = map(noise(xCord, yCord), 0, 1, 200,300);
+      var y = map(noise(xCord, yCord), 0, 1, (height/2),(height/2)+50);
       /* (above) this determines the y value of the vertices by mapping
       	 the noise values from 0 to 1 to be 200 to 300. This keeps the 
          waves from getting too high. They stay between 200 and 300. If
