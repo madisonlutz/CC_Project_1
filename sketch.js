@@ -94,7 +94,17 @@ function draw() {
   }
   
 //countdown meter
-  meter();
+  if (second()<=60 && second()>40){
+  	meter('red');
+  }
+  
+  if (second()<=40 && second()>20){
+  	meter('yellow');
+  }
+  
+  if (second()<=20 && second()>0){
+  	meter('green');
+  }
   
 //green lasers
   laser();
@@ -137,9 +147,9 @@ print (value); //checking to make sure the different modes work
   
 } //draw end
 
-function meter(){ //creating the time meter on the right
+function meter(f){ //creating the time meter on the right
   sMeter = second()*5;
-  fill('red');
+  fill(f);
   noStroke();
   rect((width-50), 50+sMeter, 25, 300-sMeter);
   noFill();
@@ -283,8 +293,8 @@ function water (){
     }
 
    	yCord += 0.01; //everytime through the water function the yCord increase
-    vertex(width, height); //vertex at the bottom right corner
-    vertex(0, height); //vertex at the bottom left corner
+    vertex(windowWidth, windowHeight); //vertex at the bottom right corner
+    vertex(0, windowHeight); //vertex at the bottom left corner
   endShape(CLOSE); //closes the ocean polygon
   
 }
